@@ -1,13 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
 
-# Add WotNot chat widget script
-chat_script = """
-<script src="https://app.wotnot.io/chat-widget/nhVP8wJYUZam165958636448p4JHOLR5.js" defer></script>
-"""
-st.components.v1.html(chat_script, height=0)
-
-# Set page configuration
+# Set page configuration first
 st.set_page_config(
     page_title="Chat Widget",
     page_icon="💬",
@@ -15,7 +9,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Add custom CSS for centering and styling
+# Add custom CSS
 st.markdown("""
     <style>
         /* Hide Streamlit default elements */
@@ -24,44 +18,44 @@ st.markdown("""
         header {visibility: hidden;}
         .stDeployButton {visibility: hidden;}
         
-        /* Full viewport height */
-        html, body, [class*="css"] {
-            height: 100%;
-            margin: 0;
-            padding: 0;
+        /* Basic page styling */
+        .stApp {
+            background-color: #f0f2f6;
+            padding: 20px;
         }
         
-        /* Center the iframe container */
-        .iframe-container {
+        /* Container for the chat */
+        .chat-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 80vh;
             width: 100%;
         }
         
-        /* Style the iframe */
-        .chat-iframe {
+        /* Style for the chat widget */
+        #wotnot-chat-widget {
+            width: 100% !important;
+            height: 600px !important;
             border: none;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 12px;
-            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
     </style>
 """, unsafe_allow_html=True)
 
-# Create the HTML for the iframe
-chat_html = """
-<div class="iframe-container">
-    <iframe 
-        class="chat-iframe"
-        width="640" 
-        height="640" 
-        src="https://embed.wotnot.io/nhVP8wJYUZam165958636448p4JHOLR5/bot/5bdpjUQkD26L175450164352hOKAHokN?display_header=false&history_retention=false" 
-        frameborder="0">
-    </iframe>
-</div>
+# Add title and description
+st.title("Welcome to MedSynergy")
+st.write("Our virtual assistant is here to help you.")
+
+# Add the WotNot chat widget script
+chat_script = """
+<script src="https://app.wotnot.io/chat-widget/nhVP8wJYUZam165958636448p4JHOLR5.js" defer></script>
+<div id="wotnot-chat-widget"></div>
 """
 
-# Display the chat widget
-components.html(chat_html, height=700)
+# Display the chat widget in a container
+st.markdown(
+    "<div class='chat-container'>" + chat_script + "</div>",
+    unsafe_allow_html=True
+)
